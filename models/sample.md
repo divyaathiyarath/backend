@@ -1,1 +1,1 @@
-// Here we are dealing with the DB queries for sample
+# This file will handle the DB queries for sample.

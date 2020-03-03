@@ -1,3 +1,5 @@
-// This files act as a controller for middleware where the permission will get granted or not.
-// Here we are dealing only with the inputs from the routes and output to the routes.
-// We are not handling any DB queries here.
+# This file acts as a controller of the middleware to grand permissions
+
+# This file only manages input from routes and outputs to the routes.
+
+# This file will not handle any DB queries.

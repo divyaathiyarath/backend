@@ -1,3 +1,5 @@
-// This files act as a controller for sample.
-// Here we are dealing only with the inputs from the routes and output to the routes.
-// We are not handling any DB queries here.
+# This files act as a controller for sample.
+
+# This file only manages input from routes and outputs to the routes.
+
+# This file will not handle any DB queries.
