@@ -3,8 +3,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mongoose = require ("mongoose");
-require('dotenv').config()
+require('dotenv').config();
+require('./models');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -22,18 +22,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
-
-// mongodb connection
-
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true },function (err, res) {
-  if (err) {
-    console.log(err)
-    return
-  }
-  console.log(`Mongoose connected on ${process.env.MONGODB_URI}`)
-  }
-);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -47,7 +35,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
 });
 
 module.exports = app;
