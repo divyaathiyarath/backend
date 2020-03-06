@@ -1,8 +1,11 @@
 {
-  "USERS": {
-    "ROLE": {
-      "ADMIN": 1,
-      "STUDENT": 2
-    }
+  "MERCHANT_TYPE": {
+    "VENDOR": 1,
+    "PAYER": 2
+  },
+  "GENDER": {
+    "MALE": 1,
+    "FEMALE": 2,
+    "OTHERS": 3
   }
 }

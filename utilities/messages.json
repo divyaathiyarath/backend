@@ -1,0 +1,7 @@
+{
+    "invalid_user_name_or_password":"Invalid username or password",
+    "invalid_merchant_type":"Merchant type is invalid",
+    "already_exits":"User already exists",
+    "internal_server_error":"Internal Server Error",
+    "login_success":"Login successfull"
+}
