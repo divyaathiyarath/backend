@@ -5,11 +5,16 @@ const searchMerchant = async (params) => {
     return data;
 };
 const addMerchant = async (params) => {
-    let data = await db.Merchant.insertMany(params);
+    let details = {
+        email: params.email,
+        password: params.password,
+        type: params.type
+    };
+    let data = await db.Merchant.insertMany(details);
     return data;
 };
 
 module.exports = {
     searchMerchant,
     addMerchant
-}
+};

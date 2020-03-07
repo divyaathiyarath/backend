@@ -28,16 +28,12 @@ const signUp = async (req, res, next) => {
         if (!generateHashResult) {
             return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
         } else {
-            let merchantData = await addMerchant({
-                email: req.body.email,
-                password: generateHashResult,
-                type: req.body.type
-
-            });
+            req.body.password = generateHashResult;
+            let merchantData = await addMerchant(req.body);
             if (!merchantData) {
                 return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
             }
-            return response.success(res, null, 'signup completed');
+            return response.success(res, null, messages.signup_success);
         }
     } catch (error) {
         console.log(error);

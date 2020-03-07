@@ -41,8 +41,7 @@ const merchantSchema = mongoose.Schema({
         lowercase: true
     },
     mobile_number: {
-        type: Number,
-        unique: true
+        type: Number
     },
     password: {
         type: String

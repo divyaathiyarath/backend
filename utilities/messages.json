@@ -3,5 +3,6 @@
     "invalid_merchant_type":"Merchant type is invalid",
     "already_exits":"User already exists",
     "internal_server_error":"Internal Server Error",
-    "login_success":"Login successfull"
+    "login_success":"Login successfull",
+    "signup_success":"Signup successfull"
 }
