@@ -1,0 +1,9 @@
+{
+    "invalid_user_name_or_password":"Invalid username or password",
+    "invalid_merchant_type":"Merchant type is invalid",
+    "already_exits":"User already exists",
+    "internal_server_error":"Internal Server Error",
+    "login_success":"Login successfull",
+    "signup_success":"Signup successfull",
+    "sent_otp": "If you are a registered user an email will be sent with an OTP to reset your password"
+}
