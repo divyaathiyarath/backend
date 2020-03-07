@@ -10,5 +10,5 @@ const {
 
 router.post('/signUp', validate('merchant-registration'), verifyRequest, signUp);
 router.post('/login', validate('merchant-login'), login);
-router.post('/forgotPassword', forgotPassword);
+router.post('/forgotPassword',validate('merchant-forgot-password'), verifyRequest, forgotPassword);
 module.exports = router;

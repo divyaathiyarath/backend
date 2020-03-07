@@ -28,6 +28,12 @@ const validate = method => {
                     .withMessage('Please enter a valid password')
             ];
         }
+        case 'merchant-forgot-password': {
+            return [
+                check('email', "email_id doesn't exists").exists().bail()
+                    .isEmail().bail().withMessage('Invalid email address')
+            ];
+        }
     }
 };
 
