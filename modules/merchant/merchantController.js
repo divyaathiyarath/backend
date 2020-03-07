@@ -1,5 +1,6 @@
 const response = require('../../utilities/response');
-const { loginSession } = require('../../utilities/redis');
+const { sendMail } = require('../../utilities/email');
+const { loginSession, otpCreateSession } = require('../../utilities/redis');
 const messages = require('../../utilities/messages.json');
 const {
     validationResult
@@ -69,7 +70,36 @@ const login = async (req, res, next) => {
     }
 };
 
+const forgotPassword = async (req, res, next) => {
+    try {
+        let username = req.body.email;
+
+        let userData = await searchMerchant(username);
+
+        if (!userData) {
+            return response.success(res, null, messages.sent_otp);
+        }
+
+        let otp = Math.floor(1e5 + Math.random() * 9e5);
+        let subject = 'Reset Password - Forfit';
+        let html = `<p>Your otp is ${otp}</p>`;
+
+        await otpCreateSession(userData.email, otp);
+
+        let mailData = await sendMail(userData.email, subject, null, html);
+
+        if (!mailData) {
+            return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
+        } else {
+            return response.success(res, null, messages.sent_otp);
+        }
+    } catch (ex) {
+        return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
+    }
+};
+
 module.exports = {
     signUp,
-    login
+    login,
+    forgotPassword
 };

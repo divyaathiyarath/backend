@@ -4,9 +4,11 @@ const { validate } = require('../middlewares/fields/validator');
 const verifyRequest = require('../middlewares/fields/verifyrequest');
 const {
     signUp,
-    login
+    login,
+    forgotPassword
 } = require('../modules/merchant/merchantController');
 
 router.post('/signUp', validate('merchant-registration'), verifyRequest, signUp);
 router.post('/login', validate('merchant-login'), login);
+router.post('/forgotPassword', forgotPassword);
 module.exports = router;
