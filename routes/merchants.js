@@ -5,10 +5,12 @@ const verifyRequest = require('../middlewares/fields/verifyrequest');
 const {
     signUp,
     login,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 } = require('../modules/merchant/merchantController');
 
 router.post('/signUp', validate('merchant-registration'), verifyRequest, signUp);
 router.post('/login', validate('merchant-login'), login);
-router.post('/forgotPassword',validate('merchant-forgot-password'), verifyRequest, forgotPassword);
+router.post('/forgotPassword', validate('merchant-forgot-password'), verifyRequest, forgotPassword);
+router.post('/resetPassword', validate('merchant-reset-password'), verifyRequest, resetPassword);
 module.exports = router;

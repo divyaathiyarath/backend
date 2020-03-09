@@ -5,5 +5,8 @@
     "internal_server_error":"Internal Server Error",
     "login_success":"Login successfull",
     "signup_success":"Signup successfull",
-    "sent_otp": "If you are a registered user an email will be sent with an OTP to reset your password"
+    "sent_otp": "If you are a registered user an email will be sent with an OTP to reset your password",
+    "invalid_otp": "Invalid otp or invalid email",
+    "otp_verified":"OTP has been verified",
+    "password_reset":"Password has been changed"
 }

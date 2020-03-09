@@ -1,6 +1,13 @@
 const response = require('../../utilities/response');
-const { sendMail } = require('../../utilities/email');
-const { loginSession, otpCreateSession } = require('../../utilities/redis');
+const {
+    sendMail
+} = require('../../utilities/email');
+const {
+    loginSession,
+    otpCreateSession,
+    otpCheckSession,
+    otpDeleteSession
+} = require('../../utilities/redis');
 const messages = require('../../utilities/messages.json');
 const {
     validationResult
@@ -12,7 +19,8 @@ const {
 const config = require('../../config');
 const {
     searchMerchant,
-    addMerchant
+    addMerchant,
+    updateMerchant
 } = require('./merchantServices');
 
 const signUp = async (req, res, next) => {
@@ -97,9 +105,43 @@ const forgotPassword = async (req, res, next) => {
         return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
     }
 };
+const resetPassword = async (req, res, next) => {
+    try {
+        let username = req.body.email;
+        let newPassword = req.body.newPassword;
+        let otp = req.body.otp;
+
+        let checkOtp = await otpCheckSession(username, otp);
+
+        if (!checkOtp) {
+            return response.error(res, null, config.HTTP_STATUS_CODES.BAD_REQUEST, messages.invalid_otp);
+        }
+
+        let userData = await searchMerchant(username);
+
+        if (!userData) {
+            return response.error(res, null, config.HTTP_STATUS_CODES.BAD_REQUEST, messages.invalid_otp);
+        }
+
+        let passwordHash = await generateHash(newPassword);
+
+        let searchQuery = {email: username};
+        let updateQuery = {password: passwordHash};
+
+        let updateMerchantstatus = await updateMerchant(searchQuery, updateQuery);
+        if (updateMerchantstatus) {
+            await otpDeleteSession(username);
+        }
+
+        return response.success(res, null, messages.password_reset);
+    } catch (ex) {
+        return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
+    }
+};
 
 module.exports = {
     signUp,
     login,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 };

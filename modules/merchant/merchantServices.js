@@ -14,7 +14,14 @@ const addMerchant = async (params) => {
     return data;
 };
 
+const updateMerchant = async (searchQuery, updateQuery) => {
+
+    let data = await db.Merchant.findOneAndUpdate(searchQuery, updateQuery);
+    return data;
+};
+
 module.exports = {
     searchMerchant,
-    addMerchant
+    addMerchant,
+    updateMerchant
 };
