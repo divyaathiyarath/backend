@@ -9,6 +9,7 @@ const {
     otpDeleteSession
 } = require('../../utilities/redis');
 const messages = require('../../utilities/messages.json');
+const template = require('../../html');
 const {
     validationResult
 } = require('express-validator');
@@ -90,7 +91,8 @@ const forgotPassword = async (req, res, next) => {
 
         let otp = Math.floor(1e5 + Math.random() * 9e5);
         let subject = 'Reset Password - Forfit';
-        let html = `<p>Your otp is ${otp}</p>`;
+        // let html = `<p>Your otp is ${otp}</p>`;
+        let html = await template.resetPassword.html();
 
         await otpCreateSession(userData.email, otp);
 
