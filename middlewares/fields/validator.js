@@ -53,6 +53,12 @@ const validate = method => {
                     .withMessage('Please enter a valid password')
             ];
         }
+        case 'merchant-edit':{
+             return [
+                check('type', "Merchant type doesn't exists").exists().bail()
+                .isInt().bail().withMessage('Invalid merchant type')
+            ];
+        }
     }
 };
 

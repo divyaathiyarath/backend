@@ -1,5 +1,4 @@
 const db = require('../../models');
-
 const searchMerchant = async (params) => {
     let data = await db.Merchant.findOne({ email: params }, 'id email password type');
     return data;

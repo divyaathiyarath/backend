@@ -23,7 +23,7 @@ const {
     addMerchant,
     updateMerchant
 } = require('./merchantServices');
-
+//const userData=require('../../middlewares/authentication/authCheckController');
 const signUp = async (req, res, next) => {
     try {
         let merchantTypes = Object.values(config.DB_CONSTANTS.MERCHANT_TYPE);
@@ -141,9 +141,31 @@ const resetPassword = async (req, res, next) => {
     }
 };
 
+const editProfile=async(req,res,next)=>{
+    try{
+        
+        let mobile_number=req.body.mobile_number;
+        let userId=req.userData.id;
+        let searchQuery={userId};
+        let updateQuery={mobile_number:mobile_number};
+        let updateStatus=await updateMerchant(searchQuery,updateQuery);
+            if (!updateStatus) {
+                return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
+            }
+            return response.success(res, null, messages.edit_success);
+      
+
+    }
+    catch(error){
+      console.log(error);
+      next(error);
+    }
+}
+
 module.exports = {
     signUp,
     login,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    editProfile
 };

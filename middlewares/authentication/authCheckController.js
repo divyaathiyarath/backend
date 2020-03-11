@@ -19,8 +19,12 @@ module.exports = async (req, res, next) => {
                 messages.unauthorized_user);
         }
 
-        let userData;
-        req.userData = userData;
+       let userData;
+       req.userData=userSession;
+       console.log(req.userData);
+       //res.send(req.userData);
+
+        
         next();
     } catch (ex) {
         return response.error(res, null,

@@ -9,5 +9,6 @@
     "invalid_otp": "Invalid otp or invalid email",
     "otp_verified":"OTP has been verified",
     "password_reset":"Password has been changed",
-    "unauthorized_user":"Invalid user"
+    "unauthorized_user":"Invalid user",
+    "edit_success":"Updated Successfully"
 }

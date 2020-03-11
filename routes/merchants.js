@@ -7,7 +7,8 @@ const {
     signUp,
     login,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    editProfile
 } = require('../modules/merchant/merchantController');
 
 router.post('/signUp', validate('merchant-registration'), verifyRequest, signUp);
@@ -15,4 +16,5 @@ router.post('/login', validate('merchant-login'), login);
 router.post('/forgotPassword', authCheck, validate('merchant-forgot-password'), verifyRequest, 
     forgotPassword);
 router.post('/resetPassword', validate('merchant-reset-password'), verifyRequest, resetPassword);
+router.post('/editProfile',authCheck,validate('merchant-edit'),verifyRequest,editProfile);
 module.exports = router;
