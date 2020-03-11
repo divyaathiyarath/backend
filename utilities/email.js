@@ -17,6 +17,7 @@ exports.sendMail = async (email, subject, text, html) => {
         await sgMail.send(mail);
         return true;
     } catch (ex) {
+        console.log(ex)
         // loggerUtil.error({
         //     message: ex.toString(),
         //     level: 'error'
