@@ -14,6 +14,7 @@ module.exports = {
   rules: {
       // allow paren-less arrow functions
       /* eslint-disable eol-last */
+      'max-len': ["error", { "code": 100 }],
       indent: ["error", 4, { "SwitchCase": 1 }],
       'camelcase': 1,
       'comma-style': 1,

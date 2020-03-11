@@ -8,5 +8,6 @@
     "sent_otp": "If you are a registered user an email will be sent with an OTP to reset your password",
     "invalid_otp": "Invalid otp or invalid email",
     "otp_verified":"OTP has been verified",
-    "password_reset":"Password has been changed"
+    "password_reset":"Password has been changed",
+    "unauthorized_user":"Invalid user"
 }
