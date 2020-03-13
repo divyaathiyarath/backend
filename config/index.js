@@ -19,7 +19,8 @@ module.exports = {
         SERVICE_UNAVAILABLE: 503
     },
     DATABASE: {
-        merchantCollectionName: 'merchants'
+        merchantCollectionName: 'merchants',
+        api_keyCollectionName:'api_keys'
     },
     JWT: {
         PAYLOAD: {
@@ -36,5 +37,8 @@ module.exports = {
     },
     SECRETS: {
         SALT_ROUNDS: 10
-    }
+    },
+    
+   API_KEY_ACCESS_TYPE:2
+    
 };

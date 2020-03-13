@@ -15,4 +15,5 @@ function verifyRequest (req, res, next) {
     }
     next();
 }
+
 module.exports = verifyRequest;

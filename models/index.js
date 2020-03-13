@@ -14,5 +14,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 module.exports = {
-    Merchant: require('./merchants')
+    Merchant: require('./merchants'),
+    api_key:require('./api_key')
 };

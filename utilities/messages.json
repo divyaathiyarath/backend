@@ -10,5 +10,6 @@
     "otp_verified":"OTP has been verified",
     "password_reset":"Password has been changed",
     "unauthorized_user":"Invalid user",
-    "edit_success":"Updated Successfully"
+    "edit_success":"Updated Successfully",
+    "apiKey_success":"ApiKey generated successfully"
 }
