@@ -16,7 +16,6 @@ exports.clientKey=()=>
 //node schedule function
 exports.pendingApiCheck=()=>{
     schedule.scheduleJob('* * * * *', function(startingtime){
-        console.log('The answer to life, the universe, and everything!');
         let date=new Date();
         console.log(date)
         let diff=(date.getTime()-startingtime.getTime())/1000;
