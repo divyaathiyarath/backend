@@ -1,9 +1,8 @@
 const response = require('../../utilities/response');
-const {loginSession}=require('../../utilities/redis');
 const messages = require('../../utilities/messages.json');
 const apiKey=require('../../utilities/apiKey');
 const {pendingApiCheck}=require('../../utilities/apiKey');
-//const pendingApiCheck=require('../../utilities/apiKey');
+
 
 const config = require('../../config');
 
@@ -88,40 +87,33 @@ try{
      let apiKeyData=await searchApiKeyData(searchQuery);
      if(apiKeyData)
       {
+        
         let createdTime=apiKeyData.updated_at;
-        console.log("created time"+createdTime);
-       // console.log("created time"+apiKeyData);
+        //Node schedule function call
+        let status=await pendingApiCheck(createdTime);
+       if(status==2)
+       {
+        updateQuery={client_secret_status:2}
+        let updateStatus=await (updateClient(searchQuery,updateQuery));
+        if (!updateStatus) {
+         return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
+       }
       }
-
-    
-     let status=pendingApiCheck(createdTime);
-     if(status==2)
-     {
-      updateQuery={client_secret_status:2}
-      let updateStatus=await (updateClient(searchQuery,updateQuery));
-      if (!updateStatus) {
-       return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
-      }
-
-     }
-
-    let clientData=await addClient(merchant_id,client_id,client_secret,merchant_type);
-    if (!clientData) {
-    return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
-     }
-    else{
+    }
+       let clientData=await addClient(merchant_id,client_id,client_secret,merchant_type);
+      if (!clientData) {
+      return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
+       }
+      else{
        return response.success(res, null, messages.apiKey_success);
        }
-
-     //Update the status of existing key to pending
-    //searchQuery={merchant_id:req.userData._id};
     
    }
    } 
-catch(error)        
-{
- console.log(error);
-}
+ catch(error)        
+ {
+  console.log(error);
+ }
 }
 
 module.exports={
