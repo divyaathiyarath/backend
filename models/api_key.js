@@ -20,8 +20,8 @@ const api_key_schema=mongoose.Schema({
     },
    client_secret_status:
     {
-        type:Boolean,
-        default:true
+        type:Number,
+        default:1
     }
 },{ timestamps:
     {

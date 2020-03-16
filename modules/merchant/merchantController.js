@@ -1,6 +1,4 @@
 const response = require('../../utilities/response');
-const NodeRSA=require('node-rsa');
-const uuidv4=require("uuid/v4");
 const {
     sendMail
 } = require('../../utilities/email');
@@ -24,11 +22,9 @@ const {
     searchMerchant,
     addMerchant,
     updateMerchant,
-    searchApiKeyData,
-    addClient,
-    updateClient
+    readMerchant
 } = require('./merchantServices');
-//const userData=require('../../middlewares/authentication/authCheckController');
+
 const signUp = async (req, res, next) => {
     try {
         let merchantTypes = Object.values(config.DB_CONSTANTS.MERCHANT_TYPE);
@@ -145,21 +141,37 @@ const resetPassword = async (req, res, next) => {
         return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
     }
 };
+//Api to read merchant data
+const readMerchantDetails=async(req,res,next)=>{
+   try{
+    let searchQuery=req.userData._id;
+    let readStatus=await readMerchant(searchQuery);
+    if(!readStatus)
+    {
+      return response.error(res,null,config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,messages.internal_server_error);
+    }
+    res.send(readStatus);
+     console.log(readStatus);
+   }
+   catch(error)
+   {
+     console.log(error);
+   }
+}
 
+//Api to update merchant data
 const editProfile=async(req,res,next)=>{
     try{
         
-        let mobile_number=req.body.mobile_number;
         let userId=req.userData.id;
         let searchQuery={userId};
-        let updateQuery={mobile_number:mobile_number};
+        updateQuery=req.body;
         let updateStatus=await updateMerchant(searchQuery,updateQuery);
             if (!updateStatus) {
                 return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
             }
             return response.success(res, null, messages.edit_success);
       
-
     }
     catch(error){
       console.log(error);
@@ -167,51 +179,11 @@ const editProfile=async(req,res,next)=>{
     }
 }
 
-const  apiKeyGeneration=async(req,res,next)=>{
-    console.log("apiKeyGeneration");
-
-  try{     
-      console.log(req.userData._id);
-      let apiKeyData=await searchApiKeyData(req.userData.id);
-      if(!apiKeyData)
-      {
-      const keyData=Math.floor(Math.random() * 100000000);
-      const key=new NodeRSA({b:512});
-      const client_secret=key.encrypt(keyData,'base64');
-      let merchant_id=req.userData.id;
-      let client_id=uuidv4();
-      let merchant_type=req.userData.type;
-      let clientData=await addClient(merchant_id,client_id,client_secret,merchant_type);
-      if (!clientData) {
-        return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
-       }
-      return response.success(res, null, messages.apiKey_success);
-      }
-      else
-      {
-       searchQuery={merchamt_id:req.userData.id}
-       updateQuery={client_secret_status:false}
-       let updateStatus=await (updateClient(searchQuery,updateQuery));
-       if (!updateStatus) {
-        return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
-       }
-       let clientData=await addClient(merchant_id,client_id,client_secret,merchant_type);
-       if (!clientData) {
-         return response.error(res, null, config.HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR, messages.internal_server_error);
-        }
-       return response.success(res, null, messages.apiKey_success);
-      }
-    }
-    catch(error)
-    {
-      console.log(error);
-    }
-}
 module.exports = {
     signUp,
     login,
     forgotPassword,
     resetPassword,
     editProfile,
-    apiKeyGeneration
+    readMerchantDetails  
 };
